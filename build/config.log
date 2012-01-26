@@ -1,0 +1,134 @@
+# project  configured on Thu Jan 26 14:03:05 2012 by
+# waf 1.6.10 (abi 98, python 20702f0 on linux2)
+# using ./waf configure build
+#
+----------------------------------------
+Setting top to
+/home/lukeb/Projects/24hours
+----------------------------------------
+Setting out to
+/home/lukeb/Projects/24hours/build
+----------------------------------------
+Checking for 'gcc' (c compiler)
+find program=['gcc', 'cc'] paths=['/usr/local/bin', '/usr/bin', '/bin', '/usr/games'] var='CC' -> '/usr/bin/gcc'
+find program=['ar'] paths=['/usr/local/bin', '/usr/bin', '/bin', '/usr/games'] var='AR' -> '/usr/bin/ar'
+/usr/bin/gcc
+----------------------------------------
+Checking for 'g++' (c++ compiler)
+find program=['g++', 'c++'] paths=['/usr/local/bin', '/usr/bin', '/bin', '/usr/games'] var='CXX' -> '/usr/bin/g++'
+(tool ar is already loaded, skipping)
+/usr/bin/g++
+(tool boost is already loaded, skipping)
+----------------------------------------
+Checking boost includes
+1_46_1
+----------------------------------------
+Checking boost libs
+Found the boost path in /usr/lib with the libraries:
+    /usr/lib/libboost_date_time-mt.a
+    /usr/lib/libboost_date_time-mt.so
+    /usr/lib/libboost_date_time.a
+    /usr/lib/libboost_date_time.so
+    /usr/lib/libboost_date_time.so.1.46.1
+    /usr/lib/libboost_filesystem-mt.a
+    /usr/lib/libboost_filesystem-mt.so
+    /usr/lib/libboost_filesystem.a
+    /usr/lib/libboost_filesystem.so
+    /usr/lib/libboost_filesystem.so.1.46.1
+    /usr/lib/libboost_iostreams.so.1.46.1
+    /usr/lib/libboost_program_options-mt.a
+    /usr/lib/libboost_program_options-mt.so
+    /usr/lib/libboost_program_options.a
+    /usr/lib/libboost_program_options.so
+    /usr/lib/libboost_program_options.so.1.46.1
+    /usr/lib/libboost_regex-mt.a
+    /usr/lib/libboost_regex-mt.so
+    /usr/lib/libboost_regex.a
+    /usr/lib/libboost_regex.so
+    /usr/lib/libboost_regex.so.1.46.1
+    /usr/lib/libboost_serialization-mt.a
+    /usr/lib/libboost_serialization-mt.so
+    /usr/lib/libboost_serialization.a
+    /usr/lib/libboost_serialization.so
+    /usr/lib/libboost_serialization.so.1.42.0
+    /usr/lib/libboost_serialization.so.1.46.1
+    /usr/lib/libboost_system-mt.a
+    /usr/lib/libboost_system-mt.so
+    /usr/lib/libboost_system.a
+    /usr/lib/libboost_system.so
+    /usr/lib/libboost_system.so.1.46.1
+    /usr/lib/libboost_thread-mt.a
+    /usr/lib/libboost_thread-mt.so
+    /usr/lib/libboost_thread.a
+    /usr/lib/libboost_thread.so
+    /usr/lib/libboost_thread.so.1.46.1
+    /usr/lib/libboost_wserialization-mt.a
+    /usr/lib/libboost_wserialization-mt.so
+    /usr/lib/libboost_wserialization.a
+    /usr/lib/libboost_wserialization.so
+    /usr/lib/libboost_wserialization.so.1.42.0
+    /usr/lib/libboost_wserialization.so.1.46.1
+Trying pattern boost_system(-gcc[0-9]{0,3})+(-1_46_1)+
+Trying pattern boost_system(-1_46_1)+
+Trying pattern boost_system(-1_46_1)+
+Trying pattern boost_system(-gcc[0-9]{0,3})+
+Trying pattern boost_system
+Found boost lib libboost_system-mt.a
+Trying pattern boost_filesystem(-gcc[0-9]{0,3})+(-1_46_1)+
+Trying pattern boost_filesystem(-1_46_1)+
+Trying pattern boost_filesystem(-1_46_1)+
+Trying pattern boost_filesystem(-gcc[0-9]{0,3})+
+Trying pattern boost_filesystem
+Found boost lib libboost_filesystem-mt.a
+Trying pattern boost_thread(-gcc[0-9]{0,3})+(-1_46_1)+
+Trying pattern boost_thread(-1_46_1)+
+Trying pattern boost_thread(-1_46_1)+
+Trying pattern boost_thread(-gcc[0-9]{0,3})+
+Trying pattern boost_thread
+Found boost lib libboost_thread-mt.a
+Trying pattern boost_date_time(-gcc[0-9]{0,3})+(-1_46_1)+
+Trying pattern boost_date_time(-1_46_1)+
+Trying pattern boost_date_time(-1_46_1)+
+Trying pattern boost_date_time(-gcc[0-9]{0,3})+
+Trying pattern boost_date_time
+Found boost lib libboost_date_time-mt.a
+Trying pattern boost_regex(-gcc[0-9]{0,3})+(-1_46_1)+
+Trying pattern boost_regex(-1_46_1)+
+Trying pattern boost_regex(-1_46_1)+
+Trying pattern boost_regex(-gcc[0-9]{0,3})+
+Trying pattern boost_regex
+Found boost lib libboost_regex-mt.a
+ok
+----------------------------------------
+Checking for boost linkage
+==>
+#include <boost/system/error_code.hpp>
+int main() { boost::system::error_code c; }
+<==
+[1/2] [32mcxx: build/.conf_check_968fbcee789046a8c143bb4a6e302895/test.cpp -> build/.conf_check_968fbcee789046a8c143bb4a6e302895/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-I/usr/include', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_968fbcee789046a8c143bb4a6e302895/testbuild/test.cpp.1.o -> build/.conf_check_968fbcee789046a8c143bb4a6e302895/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/lukeb/Projects/24hours/build/.conf_check_968fbcee789046a8c143bb4a6e302895/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/usr/lib', '-lboost_system-mt', '-lboost_filesystem-mt', '-lboost_thread-mt', '-lboost_date_time-mt', '-lboost_regex-mt']
+==>
+#include <boost/thread.hpp>
+int main() { boost::thread t; }
+<==
+[1/2] [32mcxx: build/.conf_check_f9432292e9cb949513778706dc8c1baa/test.cpp -> build/.conf_check_f9432292e9cb949513778706dc8c1baa/testbuild/test.cpp.1.o
+[0m
+['/usr/bin/g++', '-I/usr/include', '../test.cpp', '-c', '-o', 'test.cpp.1.o']
+[2/2] [33mcxxprogram: build/.conf_check_f9432292e9cb949513778706dc8c1baa/testbuild/test.cpp.1.o -> build/.conf_check_f9432292e9cb949513778706dc8c1baa/testbuild/testprog
+[0m
+['/usr/bin/g++', 'test.cpp.1.o', '-o', '/home/lukeb/Projects/24hours/build/.conf_check_f9432292e9cb949513778706dc8c1baa/testbuild/testprog', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-L/usr/lib', '-lboost_system-mt', '-lboost_filesystem-mt', '-lboost_thread-mt', '-lboost_date_time-mt', '-lboost_regex-mt']
+ok
+----------------------------------------
+Checking for program pkg-config
+/usr/bin/pkg-config
+find program=['pkg-config'] paths=['/usr/local/bin', '/usr/bin', '/bin', '/usr/games'] var='PKGCONFIG' -> '/usr/bin/pkg-config'
+----------------------------------------
+Checking for 'unittest++'
+['/usr/bin/pkg-config', 'unittest++', '--libs', '--cflags']
+out: -I/usr/include/unittest++  -lUnitTest++  
+
+yes
