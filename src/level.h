@@ -33,12 +33,13 @@ private:
     std::vector<Tile::ptr> all_tiles_;
     std::vector<Chunk::ptr> chunks_;
     
+    std::string tile_base_path_;
     uint32_t chunks_across_;
     uint32_t chunks_down_;
 public:
     typedef std::tr1::shared_ptr<Level> ptr;
 
-    Level(uint32_t chunks_across, uint32_t chunks_down);
+    Level(uint32_t chunks_across, uint32_t chunks_down, std::string tile_base_path="");
 
     void add_tile(const std::string& filename);
     void add_chunk(std::vector<uint32_t> tile_indexes);
