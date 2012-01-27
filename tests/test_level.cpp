@@ -1,7 +1,7 @@
 #include <unittest++/UnitTest++.h>
 
 #include <string>
-#include <kazbase/os/path.h>
+#include "kazbase/os/path.h"
 #include "level.h"
 
 const uint32_t CHUNK_COUNT = 1;
