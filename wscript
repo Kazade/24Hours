@@ -12,7 +12,10 @@ def configure(conf):
     conf.check_boost('system filesystem thread date_time regex')
     conf.check_cfg(package="libcurl", args="--libs --cflags", uselib_store="CURL")    
     conf.check_cfg(package="unittest++", args="--libs --cflags", uselib_store="UNITTEST")
-
+    conf.check_cfg(package="gl", args="--libs --cflags", uselib_store="GL")
+    conf.check_cfg(package="glu", args="--libs --cflags", uselib_store="GLU")    
+    conf.check_cfg(package="sdl", args="--libs --cflags", uselib_store="SDL")
+    conf.check_cfg(package="sigc++-2.0", args="--libs --cflags", uselib_store="SIGC")
     conf.env.CXXFLAGS = ['-g', '-w', '-std=c++0x']
  
 def build(bld):
@@ -21,14 +24,21 @@ def build(bld):
     tests = bld.new_task_gen(
         features = "cxx cxxprogram",
         target = "unit_tests",
-        uselib = "UNITTEST CURL",
+        uselib = "UNITTEST CURL GL GLU SDL SIGC",
         use = [ "BOOST",  "SOIL" ]
     )
     
-    tests.includes = "src /usr/include/SOIL"
+    tests.includes = "src kglt/src /usr/include/SOIL"
     tests.source = tests.path.make_node("tests").ant_glob("**/*cpp")
-    tests.source += tests.path.make_node("src").ant_glob("**/*cpp", excl=["kazbase/gtk/flattr_button.cpp", "kazbase/gtk/switch_menu.cpp", "kazbase/tests.cpp"])
-
+    tests.source += tests.path.make_node("kglt/src").ant_glob("**/*c")
+    tests.source += tests.path.make_node("kglt/src").ant_glob("**/*cpp", excl=[
+        "kazbase/gtk/flattr_button.cpp", 
+        "kazbase/gtk/switch_menu.cpp", 
+        "kazbase/tests.cpp",
+        "sample.cpp",
+        "q2bsp_sample.cpp"
+    ])
+    tests.source += tests.path.make_node("src").ant_glob("**/*cpp")
     tests.install_path = None
 
     import shutil, os
