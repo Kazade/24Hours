@@ -1,14 +1,14 @@
 #include <unittest++/UnitTest++.h>
 
-#include "level.h"
+#include "level/collision_chunk_grid.h"
 
 TEST(collision_basic_functionality) {
     
-    CollisionMap map(3, 1);
+    CollisionChunkGrid map(3, 1);
     
-    CHECK_EQUAL(0, map.tile_count());
+    CHECK_EQUAL(3, map.horizontal_chunk_count());
+    CHECK_EQUAL(1, map.vertical_chunk_count());
     
     //Check we can't intersect with the map
-    CHECK(!map.ray_intersect(Point(0, CHUNK_SIZE / 2), Vec2f(1, 0)).second);
-    
+    CHECK(!map.ray_intersect(Point(0, map.chunk_size() / 2), Vec2f(1, 0)).second);
 }

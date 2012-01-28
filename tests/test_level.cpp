@@ -27,18 +27,16 @@ std::string tiles [] = {
 TEST(test_basic_level_loading) {
     Level::ptr level(new Level(3, 2, os::path::exe_path()));
     
-    CHECK_EQUAL(3, level->max_horizontal_chunk_count());
-    CHECK_EQUAL(2, level->max_vertical_chunk_count());
+    CHECK_EQUAL(3, level->colour_layer(0).horizontal_chunk_count());
+    CHECK_EQUAL(2, level->colour_layer(0).vertical_chunk_count());
     
     for(std::string tile: tiles) {
-        level->add_tile(tile);
+        level->load_colour_tile(tile);
     }
     
     for(uint32_t i = 0; i < CHUNK_COUNT; ++i) {
-        std::vector<uint32_t> tile_data(chunk_data[i][0], chunk_data[i][64]);
-        level->add_chunk(tile_data);
+        std::vector<uint32_t> tile_data;
+        tile_data.assign(chunk_data[i], chunk_data[i] + 64);
+        level->colour_layer(0).set_chunk_at(i, tile_data);
     }
-    
-    CHECK_EQUAL(2, level->tile_count());
-    CHECK_EQUAL(CHUNK_COUNT, level->chunk_count());
 }

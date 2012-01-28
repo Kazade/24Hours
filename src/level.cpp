@@ -1,5 +1,4 @@
 #include <cassert>
-#include <SOIL/SOIL.h>
 
 #include "kazbase/os/path.h"
 #include "kazbase/fdo/base_directory.h"
@@ -7,15 +6,25 @@
 
 #include "level.h"
 
-Level::Level(uint32_t chunks_across, uint32_t chunks_down, std::string tile_base_path):
-    tile_base_path_(tile_base_path),
-    chunks_across_(chunks_across),
-    chunks_down_(chunks_down) {
+Level::Level(uint32_t chunks_across, uint32_t chunks_down, 
+    std::string tile_base_path, 
+    uint32_t colour_layers):
+    tile_base_path_(tile_base_path) {
 
+    colour_layers_.resize(colour_layers);
+
+    for(uint32_t i = 0; i < colour_layers; ++i) {
+        colour_layers_[i].resize(chunks_across, chunks_down);
+    }    
+    
+    for(uint32_t i = 0; i < COLLISION_LAYER_MAX; ++i) {
+        collision_maps_[i].resize(chunks_across, chunks_down);
+    }    
 }
 
-void Level::add_tile(const std::string& filename) {
-    std::string final = filename;
+std::string Level::locate_file(const std::string& filename) {
+    std::string final;
+    
     if(!tile_base_path_.empty()) {
         final = os::path::join(tile_base_path_, filename);
     }
@@ -28,34 +37,24 @@ void Level::add_tile(const std::string& filename) {
         throw LogicError("Unable to find file: " + filename);
     }
     
-    int width, height, channels;
-    unsigned char *data = SOIL_load_image(final.c_str(), &width, &height, &channels, SOIL_LOAD_AUTO);
-    if(!data) {
-        throw RuntimeError("Not a suitable file: " + filename);
-    }
+    return final;
+}
     
-    if(width != TILE_SIZE || height != TILE_SIZE) {
-        throw LogicError("Attempted to load a tile of an invalid size: " + filename);
-    }
-    
-    if(channels != 4) {
-        throw LogicError("Attempted to load a tile without an alpha channel: " + filename);
-    }
-    
-    Tile::ptr new_tile(new Tile);
-    std::copy(data, data + (width * height * channels), new_tile->data);    
-    all_tiles_.push_back(new_tile);
-    
-    SOIL_free_image_data(data);
+void Level::load_colour_tile(const std::string& filename, uint32_t layer) {
+    ColourChunkGrid& grid = colour_layer(layer);
+    grid.add_tile(locate_file(filename));
 }
 
-void Level::add_chunk(std::vector<uint32_t> tile_indexes) {
-    assert(chunks_.size() < (chunks_across_ * chunks_down_) - 1);
-    
-    Chunk::ptr new_chunk(new Chunk);
-    int i = 0;
-    for(uint32_t tile: tile_indexes) {
-        new_chunk->tiles[i++] = tile;
-    }
-    chunks_.push_back(new_chunk);
+void Level::load_solidity_tile(const std::string& filename, CollisionLayer layer) {    
+    CollisionChunkGrid& grid = collision_layer(layer);
+    grid.add_tile(locate_file(filename));
 }
+
+CollisionChunkGrid& Level::collision_layer(CollisionLayer layer) {
+    return collision_maps_[layer];
+}
+
+ColourChunkGrid& Level::colour_layer(uint32_t i) {
+    return colour_layers_.at(i);
+}
+
